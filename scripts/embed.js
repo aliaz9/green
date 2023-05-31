@@ -1,14 +1,10 @@
 import { createClient } from '@supabase/supabase-js'
 import { Configuration, OpenAIApi } from 'openai'
 import dotenv from 'dotenv'
-//import { supabaseClient } from './'
 
 dotenv.config();
 
 
-function getToys() {
-
-}
 
 async function generateEmbeddings() {
   const configuration = new Configuration({ apiKey: process.env.OPENAI_API_KEY })
@@ -16,8 +12,6 @@ async function generateEmbeddings() {
 
   const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.VITE_SUPABASE_ANON_KEY);
 
-//   const supabase ARMAR SUPABASE CON CONFIG
-//const toys = await getToys() // Your custom function to load docs
 
   const toys = [
     {
