@@ -17,18 +17,14 @@ import supabase from '../src/config/supabaseClient.js';
 //     },
 //     database: 'toys', // Especifica el nombre de la base de datos aquí
 //   }
-  
-  
 
- const handler = async (req) => {
 
+
+const handler = async (req) => {
   try {
     //const { query, apiKey, matches } = await req.json();
-    
-    
     const query = "Juguete para niños que les gustan las pelotas";
     const input = query.replace(/\n/g, " ");
-
     const res = await fetch("https://api.openai.com/v1/embeddings", {
       headers: {
         "Content-Type": "application/json",
@@ -40,22 +36,17 @@ import supabase from '../src/config/supabaseClient.js';
         input
       })
     });
-
     const json = await res.json();
     const embedding = json.data[0].embedding;
-
-
     const { data: toys, error } = await supabase.rpc("search_toys", {
       query_embedding: embedding,
       similarity_threshold: 0.01,
       match_count: matches
     });
-
     if (error) {
       console.error(error);
       return new Response("Error", { status: 500 });
     }
-
     return new Response(JSON.stringify(toys), { status: 200 });
   } catch (error) {
     console.error(error);
